@@ -47,6 +47,7 @@ INSTALLED_APPS = (
 	'webapp',
 	'postman',
 )
+# This line of code allows messages to be sent without moderation from admin
 POSTMAN_AUTO_MODERATE_AS = True  # default is None
 
 MIDDLEWARE_CLASSES = (
