@@ -16,4 +16,4 @@ class UserProfile(models.Model):
     
     # Override the __unicode__() method to return the username
     def __unicode__(self):
-        return self.user.username
+        return self.user.username 
