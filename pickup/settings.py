@@ -123,6 +123,9 @@ STATICFILES_DIRS = (STATIC_PATH, )
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# This will direct emails to console until we set up an smtp server
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 
 
 
