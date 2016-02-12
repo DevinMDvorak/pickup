@@ -29,7 +29,8 @@ LOGIN_URL = '/webapp/login/'
 SECRET_KEY = 'ly8r91kv@wu0jy5+ck-2jl-!&hr_6^&y83wq)lr%0*foh4+tc@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True;
+
 
 ALLOWED_HOSTS = []
 
@@ -37,14 +38,17 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'webapp',
+	'django.contrib.admin',
+	'django.contrib.auth',
+	'django.contrib.contenttypes',
+	'django.contrib.sessions',
+	'django.contrib.messages',
+	'django.contrib.staticfiles',
+	'webapp',
+	'postman',
 )
+# This line of code allows messages to be sent without moderation from admin
+POSTMAN_AUTO_MODERATE_AS = True  # default is None
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -70,6 +74,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+				'postman.context_processors.inbox',
             ],
         },
     },
@@ -117,6 +122,9 @@ STATICFILES_DIRS = (STATIC_PATH, )
 # Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# This will direct emails to console until we set up an smtp server
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 
