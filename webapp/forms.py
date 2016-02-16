@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from webapp.models import UserProfile
+from webapp.models import UserProfile, Game
 
 
 # Form built for the default Django User class
@@ -18,3 +18,9 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('picture',)
+
+
+class NewGameForm(forms.ModelForm):
+    class Meta:
+        model = Game
+        fields = ('sport', 'date', 'time', 'description',)
