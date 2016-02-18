@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from webapp.forms import UserForm, UserProfileForm, NewGameForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 
 # Create your views here
 
@@ -153,11 +154,11 @@ def creategame(request):
     if request.method == "POST":
         form = NewGameForm(request.POST)
         if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.published_date = timezone.now()
-            post.save()
-            return redirect('post_detail', pk=post.pk)
+            game = form.save(commit=False)
+            game.author = request.user
+            game.published_date = timezone.now()
+            game.save()
+            return redirect('/webapp/')
     else:
         form = NewGameForm()
     return render(request, 'webapp/newgame.html', {'form': form})
