@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from datetime import datetime
 
 
 # Create your models here.
@@ -16,4 +16,30 @@ class UserProfile(models.Model):
     
     # Override the __unicode__() method to return the username
     def __unicode__(self):
-        return self.user.username 
+        return self.user.username
+
+
+class Game(models.Model):
+
+    BASKETBALL = 'Basketball'
+    FOOTBALL = 'Football'
+    TENNIS = 'Tennis',
+    CYCLING = 'Cycling'
+    SOCCER = 'Soccer'
+    BASEBALL = 'Baseball'
+    ULTIMATEFRISBEE = 'Ultimate Frisbee'
+
+    SPORTS = (
+        (BASKETBALL, 'Basketball'),
+        (FOOTBALL, 'Football'),
+        (TENNIS, 'Tennis'),
+        (CYCLING, 'Cycling'),
+        (SOCCER, 'Soccer'),
+        (BASEBALL, 'Baseball'),
+        (ULTIMATEFRISBEE, 'Ultimate Frisbee'),
+    )
+    sport = models.CharField(max_length = 30, choices = SPORTS)
+    date = models.DateField((u"Conversation Date"), blank=True)
+    time = models.TimeField((u"Conversation Time"), blank=True)
+    description = models.TextField(max_length = 500)
+

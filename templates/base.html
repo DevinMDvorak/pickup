@@ -16,6 +16,7 @@
                 position: fixed;
                 top: 0;
                 width: 100%;
+                z-index: 1;
             }
 
             li {
@@ -46,7 +47,8 @@
         <ul>
         {% if user.is_authenticated %}
             <li style="float:right"><a href="/webapp/logout/">Logout</a></li>
-			<li style="float:right"><a href="/webapp/messages/">Messages</a></li>
+			<li style="float:left"><a href="/webapp/messages/">Messages</a></li>
+            <li style="float:left"><a href="/webapp/newgame/">Create Game</a></li>
         {% else %}
             <li style="float:right"><a href="/webapp/register/">Register Here</a></li>
             <li style="float:right"><a href="/webapp/login/">Login</a></li>
