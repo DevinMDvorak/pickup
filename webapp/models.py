@@ -23,7 +23,7 @@ class Game(models.Model):
 
     BASKETBALL = 'Basketball'
     FOOTBALL = 'Football'
-    TENNIS = 'Tennis',
+    TENNIS = 'Tennis'
     CYCLING = 'Cycling'
     SOCCER = 'Soccer'
     BASEBALL = 'Baseball'
