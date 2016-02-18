@@ -39,7 +39,7 @@ class Game(models.Model):
         (ULTIMATEFRISBEE, 'Ultimate Frisbee'),
     )
     sport = models.CharField(max_length = 30, choices = SPORTS)
-    date = models.DateField((u"Conversation Date"), blank=True)
-    time = models.TimeField((u"Conversation Time"), blank=True)
+    date = models.DateField((u"Date"), blank=True)
+    time = models.TimeField((u"Time"), blank=True)
     description = models.TextField(max_length = 500)
 
