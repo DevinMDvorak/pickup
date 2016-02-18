@@ -3,3 +3,4 @@ from webapp.models import UserProfile
 
 # Register your models here.
 admin.site.register(UserProfile)
+admin.site.register(Game)
