@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from webapp.models import UserProfile, Game
+from webapp.models import UserProfile, Game, GroupProfile
 from django.forms import widgets
 
 # Overrides all time field inputs so that when the form
@@ -32,3 +32,10 @@ class NewGameForm(forms.ModelForm):
     class Meta:
         model = Game
         fields = ('sport', 'date', 'time', 'description', 'latitude', 'longitude', 'address')
+        
+        
+        
+class GroupProfileForm(forms.ModelForm):
+	class Meta:
+		model = GroupProfile
+		fields = ('name', 'creator', 'sport', 'zipcode',)
