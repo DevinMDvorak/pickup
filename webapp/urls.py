@@ -7,5 +7,8 @@ urlpatterns = patterns('',
 						url(r'^login/$', views.user_login, name='login'),
 						url(r'^logout/$', views.user_logout, name='logout'),
 						url(r'^messages/', include('postman.urls', namespace='postman', app_name='postman')),
-                        url(r'^newgame/$', views.creategame, name='newgame'),
+                        			url(r'^newgame/$', views.creategame, name='newgame'),
+                        			url(r'^groups/$', views.groups, name='groups'), # Create groups
+						url(r'^groupslist/$', views.groups_list, name='groupslist'), # View list of groups
+						url(r'^(?P<group_id>[0-9]+)/group/$', views.group, name='group'), # View individual groups
 						)
