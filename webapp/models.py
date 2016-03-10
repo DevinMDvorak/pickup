@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
+from decimal import Decimal
 
 
 # Create your models here.
@@ -38,8 +39,11 @@ class Game(models.Model):
         (BASEBALL, 'Baseball'),
         (ULTIMATEFRISBEE, 'Ultimate Frisbee'),
     )
-    sport = models.CharField(max_length = 30, choices = SPORTS)
-    date = models.DateField((u"Date"), blank=True)
-    time = models.TimeField((u"Time"), blank=True)
-    description = models.TextField(max_length = 500)
+    sport = models.CharField(max_length = 32, choices = SPORTS)
+    date = models.DateField((u"Date"), blank=False)
+    time = models.TimeField((u"Time"), blank=False)
+    description = models.TextField(max_length = 512)
+    latitude = models.DecimalField(max_digits=10, decimal_places=6, default=Decimal(0))
+    longitude = models.DecimalField(max_digits=10, decimal_places=6, default=Decimal(0))
+    address = models.TextField(max_length = 512, default="")
 

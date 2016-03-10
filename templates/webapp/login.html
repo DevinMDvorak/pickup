@@ -2,17 +2,57 @@
 
 {% block title %} Login{% endblock %}
 
+{% block head %}
+<style> 
+.formclass {
+    width: 50%;
+    padding: 12px 20px;
+    margin: 8px 25%;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    margin-rigth: auto;
+    font-size: 22px;
+}
+
+.formclass {
+    background-color: white;
+}
+    
+::-webkit-input-placeholder {
+   color: lightgray;
+}
+    
+    
+.submitbutton {
+    margin: 8px 30%;
+    width: 40%;
+    background: #394D61;
+    border: none;
+    padding: 8px 10px 8px 10px;
+    border-radius: 5px;
+    color: #A8BACE;
+    font-size: 22px;
+}
+.submitbutton:hover{
+    background: #24384C;
+    color: white;
+}    
+  
+</style>
+{% endblock %}
+
 {% block body_block %}
-        <h1>Login to PickUp</h1>
+        <h1 style="text-align:center;font-size:300%;">Login</h1>
 
         <form id="login_form" method="post" action="/webapp/login/">
             {% csrf_token %}
-            Username: <input type="text" name="username" value="" size="50" />
+            <input type="text" name="username" value="" class="formclass" placeholder="username" />
             <br />
-            Password: <input type="password" name="password" value="" size="50" />
+            <input type="password" name="password" value="" class="formclass" placeholder="password" />
             <br />
 
-            <input type="submit" value="submit" />
+            <input type="submit" value="submit" class="submitbutton"/>
         </form>
 
 {% endblock %}
