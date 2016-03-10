@@ -4,6 +4,9 @@
     
     <head>
         <title>PickUp {% block title %}{% endblock %}</title>
+        {% block head %}
+        
+        {% endblock %}
         <style>
             body {margin:0;}
 
@@ -42,11 +45,12 @@
         </style>
     </head>
 
-    <body bgcolor="#0F7DA7">
+    <body bgcolor="#4F659C">
 
         <ul>
         {% if user.is_authenticated %}
             <li style="float:right"><a href="/webapp/logout/">Logout</a></li>
+            <li style="float:left"><a href="/webapp/">Home</a></li>
 			<li style="float:left"><a href="/webapp/messages/">Messages</a></li>
             <li style="float:left"><a href="/webapp/newgame/">Create Game</a></li>
         {% else %}

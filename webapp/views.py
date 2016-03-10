@@ -4,6 +4,7 @@ from webapp.forms import UserForm, UserProfileForm, NewGameForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from decimal import Decimal
 
 # Create your views here
 
@@ -31,10 +32,10 @@ def register(request):
         # Attempt to grab information from the raw form information.
         # Note that we make use of both UserForm and UserProfileForm.
         user_form = UserForm(data=request.POST)
-        profile_form = UserProfileForm(data=request.POST)
+        #profile_form = UserProfileForm(data=request.POST)
         
         # If the two forms are valid...
-        if user_form.is_valid() and profile_form.is_valid():
+        if user_form.is_valid(): #and profile_form.is_valid():
             # Save the user's form data to the database.
             user = user_form.save()
             
@@ -46,16 +47,16 @@ def register(request):
             # Now sort out the UserProfile instance.
             # Since we need to set the user attribute ourselves, we set commit=False.
             # This delays saving the model until we're ready to avoid integrity problems.
-            profile = profile_form.save(commit=False)
-            profile.user = user
+            #profile = profile_form.save(commit=False)
+            #profile.user = user
             
             # Did the user provide a profile picture?
             # If so, we need to get it from the input form and put it in the UserProfile model.
-            if 'picture' in request.FILES:
-                profile.picture = request.FILES['picture']
+            #if 'picture' in request.FILES:
+            #profile.picture = request.FILES['picture']
         
             # Now we save the UserProfile model instance.
-            profile.save()
+            #profile.save()
     
             # Update our variable to tell the template registration was successful.
             registered = True
@@ -64,18 +65,18 @@ def register(request):
         # Print problems to the terminal.
         # They'll also be shown to the user.
         else:
-            print user_form.errors, profile_form.errors
+            print user_form.errors
 
     # Not a HTTP POST, so we render our form using two ModelForm instances.
     # These forms will be blank, ready for user input.
     else:
         user_form = UserForm()
-        profile_form = UserProfileForm()
+    #profile_form = UserProfileForm()
 
     # Render the template depending on the context.
     return render(request,
                   'webapp/register.html',
-                  {'user_form': user_form, 'profile_form': profile_form, 'registered': registered} )
+                  {'user_form': user_form, 'registered': registered} )
 
 
 
@@ -133,21 +134,6 @@ def user_logout(request):
     
     # Take the user back to the homepage.
     return HttpResponseRedirect('/webapp/')
-
-
-
-#@login_required
-#def creategame(request):
-    
-    # Construct a dictionary to pass to the template engine as its context.
-    # Note the key boldmessage is the same as {{ boldmessage }} in the template!
-    #context_dict = {'boldmessage': "I am bold font from the context"}
-    
-    # Return a rendered response to send to the client.
-    # We make use of the shortcut function to make our lives easier.
-    # Note that the first parameter is the template we wish to use.
-    
-#return render(request, 'webapp/newgame.html', context_dict)
 
 @login_required
 def creategame(request):
