@@ -8,4 +8,5 @@ urlpatterns = patterns('',
 						url(r'^logout/$', views.user_logout, name='logout'),
 						url(r'^messages/', include('postman.urls', namespace='postman', app_name='postman')),
                         url(r'^newgame/$', views.creategame, name='newgame'),
+						url(r'^updateprofile/$', views.updateprofile, name='update profile'),
 						)

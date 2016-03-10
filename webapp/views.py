@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from webapp.forms import UserForm, UserProfileForm, NewGameForm
+from webapp.forms import UserForm, UserProfileForm, NewGameForm, UpdateProfile
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
@@ -149,3 +149,18 @@ def creategame(request):
         form = NewGameForm()
     return render(request, 'webapp/newgame.html', {'form': form})
 
+@login_required
+def updateprofile(request):
+    args = {}
+
+    if request.method == 'POST':
+        form = UpdateProfile(request.POST)
+        form.actual_user = request.user
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('update_profile_success'))
+    else:
+        form = UpdateProfile()
+
+    args['form'] = form
+    return render(request, 'webapp/updateprofile.html', args)

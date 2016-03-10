@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block title %} Profile{% endblock %}
+
+
+{% block head %}
+<style> 
+.updateprofileformclass {
+    width: 50%;
+    padding: 12px 20px;
+    margin: 8px 25%;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    margin-rigth: auto;
+    font-size: 22px;
+}
+
+.updateprofileformclass {
+    background-color: white;
+}
+    
+::-webkit-input-placeholder {
+   color: lightgray;
+}
+    
+    
+.submitbutton {
+    margin: 8px 30%;
+    width: 40%;
+    background: #394D61;
+    border: none;
+    padding: 8px 10px 8px 10px;
+    border-radius: 5px;
+    color: #A8BACE;
+    font-size: 22px;
+}
+.submitbutton:hover{
+    background: #24384C;
+    color: white;
+}    
+
+    
+</style>
+{% endblock %}
+
+
+{% block body_block %}
+        <h1 style="text-align:center;font-size:300%;">Update Profile</h1>
+
+        <form id="updateprofile_form" method="post" action="/webapp/updateprofile/"
+                enctype="multipart/form-data">
+
+            <!-- {% csrf_token %}
+            
+
+            Display each form. The as_p method wraps each element in a paragraph
+                 (<p>) element. This ensures each element appears on a new line,
+                 making everything look neater. -->
+            <!--{{ user_form.as_p }}-->
+            
+            
+            <input type="text" name="first_name" value="" class="updateprofileformclass" placeholder="First Name" />
+            <br />
+
+            <input type="text" name="last_name" value="" class="updateprofileformclass" placeholder="Last Name" />
+            <br />
+            <input type="email" name="email" value="" class="updateprofileformclass" placeholder="example@email.com" />
+            <br />
+            <input type="password" name="password" value="" class="updateprofileformclass" placeholder="Password" />
+            <br />
+
+
+            
+            
+            
+            <!--This is something that can be done in account settings-->
+            <!--{{ profile_form.as_p }}-->
+
+            <!-- Provide a button to click to submit the form. -->
+            <input type="submit" class="submitbutton" name="submit" value="Update" />
+        </form>
+
+{% endblock %}
