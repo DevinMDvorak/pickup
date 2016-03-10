@@ -47,3 +47,12 @@ class Game(models.Model):
     longitude = models.DecimalField(max_digits=10, decimal_places=6, default=Decimal(0))
     address = models.TextField(max_length = 512, default="")
 
+
+class GroupProfile(models.Model):
+	name = models.CharField(max_length=50)
+	creator = models.CharField(max_length=50)
+	sport = models.CharField(max_length=50)
+	zipcode = models.IntegerField()
+
+	def __unicode__(self):
+		return self.group.name
