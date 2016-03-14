@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from webapp.forms import UserForm, UserProfileForm, NewGameForm
+from webapp.forms import UserForm, UserProfileForm, NewGameForm, GroupProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
@@ -141,7 +141,7 @@ def creategame(request):
         form = NewGameForm(request.POST)
         if form.is_valid():
             game = form.save(commit=False)
-            game.author = request.user
+            game.owner = request.user
             game.published_date = timezone.now()
             game.save()
             return redirect('/webapp/')
@@ -149,3 +149,28 @@ def creategame(request):
         form = NewGameForm()
     return render(request, 'webapp/newgame.html', {'form': form})
 
+
+@login_required
+def groups(request):
+	if request.method == 'POST':
+		group_form = GroupProfileForm(request.POST)
+		if group_form.is_valid():
+			group = group_forms.save(commit=False)
+			group.published_date = timezone.now()
+			group.save()
+			return redirect('/webapp/')
+		else:
+			group_form = GroupProfileForm()
+	return render(request, 'webapp/groups.html')
+
+
+@login_required
+def groups_list(request):
+	groups_list = GroupProfile.objects.all()
+	output = ', '.join([a.name for a in groups_list])
+	return render(request, 'webapp/groupslist.html', {'output': output})
+
+
+@login_required	
+def group(request, group_id):
+	return HttpResponse("You're viewing group %s." % group_id)
