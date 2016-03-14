@@ -39,6 +39,7 @@ class Game(models.Model):
         (BASEBALL, 'Baseball'),
         (ULTIMATEFRISBEE, 'Ultimate Frisbee'),
     )
+    owner = models.CharField(max_length = 16)
     sport = models.CharField(max_length = 32, choices = SPORTS)
     date = models.DateField((u"Date"), blank=False)
     time = models.TimeField((u"Time"), blank=False)
@@ -46,6 +47,9 @@ class Game(models.Model):
     latitude = models.DecimalField(max_digits=10, decimal_places=6, default=Decimal(0))
     longitude = models.DecimalField(max_digits=10, decimal_places=6, default=Decimal(0))
     address = models.TextField(max_length = 512, default="")
+
+    def __unicode__(self):
+        return self.owner + "-" + self.sport
 
 
 class GroupProfile(models.Model):
@@ -55,4 +59,5 @@ class GroupProfile(models.Model):
 	zipcode = models.IntegerField()
 
 	def __unicode__(self):
+        # This should be self.name
 		return self.group.name

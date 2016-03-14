@@ -141,7 +141,7 @@ def creategame(request):
         form = NewGameForm(request.POST)
         if form.is_valid():
             game = form.save(commit=False)
-            game.author = request.user
+            game.owner = request.user
             game.published_date = timezone.now()
             game.save()
             return redirect('/webapp/')
