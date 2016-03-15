@@ -1,24 +1,28 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from webapp.forms import UserForm, UserProfileForm, NewGameForm, GroupProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from decimal import Decimal
+from webapp.models import Game
+import json
+from django.core import serializers
 
 # Create your views here
 
+# Homepage, this view will pass all local games from database
 def index(request):
     
     # Construct a dictionary to pass to the template engine as its context.
     # Note the key boldmessage is the same as {{ boldmessage }} in the template!
-    context_dict = {'boldmessage': "I am bold font from the context"}
+    game_list = serializers.serialize('json', Game.objects.all())
     
     # Return a rendered response to send to the client.
     # We make use of the shortcut function to make our lives easier.
     # Note that the first parameter is the template we wish to use.
     
-    return render(request, 'webapp/index.html', context_dict)
+    return render(request, 'webapp/index.html', {'game_list': game_list})
 
 
 def register(request):

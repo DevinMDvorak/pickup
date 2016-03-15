@@ -44,12 +44,23 @@ class Game(models.Model):
     date = models.DateField((u"Date"), blank=False)
     time = models.TimeField((u"Time"), blank=False)
     description = models.TextField(max_length = 512)
-    latitude = models.DecimalField(max_digits=10, decimal_places=6, default=Decimal(0))
-    longitude = models.DecimalField(max_digits=10, decimal_places=6, default=Decimal(0))
+    latitude = models.FloatField()
+    longitude = models.FloatField()
     address = models.TextField(max_length = 512, default="")
 
+    def as_json(self):
+        return dict(
+            owner = self.owner,
+            sport = self.sport,
+            date = self.date.isoformat(),
+            time = self.time.isoformat(),
+            description = self.description,
+            latitude = self.latitude,
+            longitude = self.longitude
+        )
+
     def __unicode__(self):
-        return self.owner + "-" + self.sport
+        return self.owner + " " + self.sport + " " + str(self.date)
 
 
 class GroupProfile(models.Model):
@@ -60,4 +71,4 @@ class GroupProfile(models.Model):
 
 	def __unicode__(self):
         # This should be self.name
-		return self.group.name
+		return self.name
