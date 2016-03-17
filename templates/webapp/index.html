@@ -3,12 +3,254 @@
 
 {% block title %}{% endblock %}
 
-
-{% block head %}{% endblock %}
+{% block head %}
+    <style>
+        #map_container {
+            width:95%;
+            margin:2.5%;
+            background-color: #6C7C8B;
+            height:660px;
+            position: relative;
+            overflow:hidden;
+        }
+        #map {
+            width: 45%;
+            height: 90%;
+            margin: 2.5% 0 0 3%;
+            background-color: #CCC;
+            position: absolute;
+            float:left;
+        }
+        #map_text {
+            width: 45%;
+            height: 90%;
+            margin: 2.5% 0 0 52% ;
+            background-color: #CCC;
+            position: absolute;
+            float: right;
+            overflow: auto;
+        }
+        #map_panel {
+            width: 100%;
+            height: 20%;
+            border-radius: 25px;
+            background-color: white;
+            overflow: hidden;
+        }
+        #map_panel_left {
+            width: 48%;
+            height: 80%;
+            float: left;
+            border-right-style: solid;
+            margin-top: 2%;
+            margin-left: 2%;
+        }
+        #map_panel_right {
+            width: 48%;
+            height: 80%;
+            float: right;
+            margin-top: 2%;
+        }
+        .controls {
+                margin-top: 10px;
+                border: 1px solid transparent;
+                border-radius: 2px 0 0 2px;
+                box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                height: 32px;
+                outline: none;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            }
+        #pac-input {
+                background-color: #fff;
+                font-family: Roboto;
+                font-size: 15px;
+                font-weight: 300;
+                margin-left: 12px;
+                padding: 0 11px 0 13px;
+                text-overflow: ellipsis;
+                width: 300px;
+            }
+        #pac-input:focus {
+                border-color: #4d90fe;
+            }
+        .pac-container {
+                font-family: Roboto;
+            }
+        #type-selector {
+                color: #fff;
+                background-color: #4d90fe;
+                padding: 5px 11px 0px 11px;
+            }
+        #type-selector label {
+                font-family: Roboto;
+                font-size: 13px;
+                font-weight: 300;
+            }
+        #target {
+                width: 345px;
+            }
+    </style>
+{% endblock %}
 
 {% block body_block %}
-    <p style="font-size:36px;text-align:center;">PickUp is currently under construction.</p>
+    <input id="pac-input" class="controls" display='none' type="text" placeholder="Search Box">
+    <div id="map_container">
+        <div id="map"></div>
+        <div id="map_text">
+        </div>
+    </div>
 
+<script src="http://maps.googleapis.com/maps/api/js?&libraries=places,geometry"></script>
+
+<script>    
+    var game_list = {{ game_list|safe }}
+    var num_date = "";
+    var readable_date = "";
+    var months = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    var markers=[];
+    var contents = [];
+    var infowindows = [];
+
+    //This for loop takes all of the Games from our database and turns
+    //them into markers to be displayed on the local games map
+    for (i = 0; i < game_list.length; i++) { 
+        markers[i] = new google.maps.Marker({
+            position: new google.maps.LatLng(game_list[i].fields.latitude, game_list[i].fields.longitude),
+            title: game_list[i].fields.sport
+        });
+
+        num_date = game_list[i].fields.date, read_date = num_date.split('-');
+        readable_date = months[(read_date[1]/1)] + ' ' + read_date[2] + ', ' + read_date[0]
+        
+        markers[i].index = i; //add index property
+        markers[i].sport = game_list[i].fields.sport;
+        markers[i].description = game_list[i].fields.description;
+        markers[i].date = readable_date;
+        markers[i].time = game_list[i].fields.time;
+        markers[i].owner = game_list[i].fields.owner;
+        
+        contents[i] = '<div class="popup_container"><b>' + game_list[i].fields.sport + '</b>' +
+            '<div id="popup_body"><p>' + game_list[i].fields.description + '</p><p>' + readable_date +
+            ' at ' + game_list[i].fields.time + ' with ' + game_list[i].fields.owner +'</p></div></div>';
+
+        infowindows[i] = new google.maps.InfoWindow({
+            content: contents[i],
+            maxWidth: 300
+        });
+    }
+    
+    function closestGames(location, markers) {
+        var closest=[];
+        var distanceApart;
+        document.getElementById("map_text").innerHTML="";
+        
+        for (i= 0; i < markers.length; i++) {
+            distanceApart = google.maps.geometry.spherical.computeDistanceBetween(location, markers[i].getPosition());
+            if (distanceApart < 80000) {
+                markers[i].distanceApart = Math.round(distanceApart/160.934)/10;
+                closest.push(markers[i]);
+            }
+        }
+        
+        for (i= 0; i < closest.length; i++) {
+            var element = document.createElement('div');
+            var left = document.createElement('div');
+            var right = document.createElement('div');
+            element.id = 'map_panel';
+            left.id = 'map_panel_left';
+            right.id = 'map_panel_right';
+            left.innerHTML="<br>" + closest[i].sport + " Game " + closest[i].distanceApart + " Miles Away<br>" + 
+                closest[i].date + " at " + closest[i].time;
+            right.innerHTML = "<br>" + closest[i].description;
+            if(i%2 == 0) {
+                element.style.backgroundColor="#6090F0";
+            }
+            element.appendChild(left);
+            element.appendChild(right);
+            document.getElementById('map_text').appendChild(element);
+        }
+    }
+            
+            function initMap() {
+                var latLng = new google.maps.LatLng(36.0764, -94.1608);
+                var mapDiv = document.getElementById('map');
+                var map = new google.maps.Map(mapDiv, {
+                    center: latLng,
+                    zoom: 13,
+                    streetViewControl: false
+                });
+                
+                // Create the search box and link it to the UI element.
+                var input = document.getElementById('pac-input');
+                var autoComplete = new google.maps.places.Autocomplete(input);
+                map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+                
+                
+                for (i = 0; i < game_list.length; i++) {
+                    markers[i].setMap(map);
+                    
+                    google.maps.event.addListener(markers[i], 'click', function() {
+                        console.log(this.index); // this will give correct index
+                        infowindows[this.index].open(map,markers[this.index]);
+                        map.panTo(markers[this.index].getPosition());
+                    });  
+                }
+
+                // Try HTML5 geolocation.
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        latLng = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+
+                        /*infoWindow.setPosition(pos);
+                        infoWindow.setContent('Current location.');*/
+                        map.setCenter(latLng);
+                    }, function() {
+                        handleLocationError(true, infoWindow, map.getCenter());
+                    });
+                } else {
+                    // Browser doesn't support Geolocation
+                    handleLocationError(false, infoWindow, map.getCenter());
+                    }
+                
+                closestGames(latLng, markers);
+                // Listen for the event fired when the user selects a prediction and retrieve
+                // more details for that place.
+                autoComplete.addListener('place_changed', function() {
+                    var place = autoComplete.getPlace();
+
+                    if (place.length == 0) {
+                        return;
+                    }
+
+                    // Update marker
+                    latLng = place.geometry.location;
+
+                    // Create a marker for each place.
+                    map.setCenter(latLng);
+                    
+                    closestGames(latLng, markers);
+                });
+                
+
+                /*google.maps.event.addListener(marker,'click',function() {
+                    map.setZoom(9);
+                    map.setCenter(marker.getPosition());
+                    });*/
+            }
+
+            function handleLocationError(browserHasGeolocation, infoWindow, latLng) {
+                infoWindow.setPosition(latLng);
+                infoWindow.setContent(browserHasGeolocation ?
+                'Error: The Geolocation service failed.' :
+                'Error: Your browser doesn\'t support geolocation.');
+            }
+
+            google.maps.event.addDomListener(window, 'load', initMap);
+</script>
 
 
 
