@@ -191,13 +191,13 @@ def groups(request):
 	if request.method == 'POST':
 		group_form = GroupProfileForm(request.POST)
 		if group_form.is_valid():
-			group = group_forms.save(commit=False)
+			group = group_form.save(commit=False)
 			group.published_date = timezone.now()
 			group.save()
-			return redirect('/webapp/')
-		else:
-			group_form = GroupProfileForm()
-	return render(request, 'webapp/groups.html')
+			return redirect('/webapp/groups.html')
+	else:
+		group_form = GroupProfileForm()
+	return render(request, 'webapp/groups.html', {'group_form': group_form})
 
 
 @login_required
