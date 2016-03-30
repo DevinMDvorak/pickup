@@ -51,6 +51,7 @@
         {% if user.is_authenticated %}
             <li style="float:right"><a href="/webapp/logout/">Logout</a></li>
             <li style="float:left"><a href="/webapp/">Home</a></li>
+            <li style="float:left"><a href="/webapp/account/{{ user.username}}/">Profile</a></li>
 			<li style="float:left"><a href="/webapp/messages/">Messages</a></li>
             <li style="float:left"><a href="/webapp/newgame/">Create Game</a></li>
             <li style="float:left"><a href="/webapp/groups/">Groups</a></li>
@@ -59,9 +60,7 @@
             <li style="float:right"><a href="/webapp/login/">Login</a></li>
         {% endif %}
         </ul>
-        
-        <p>&nbsp;</p>
-        <p>&nbsp;</p>
+
         {% block body_block %}{% endblock %}
 		{% block content %}{% endblock %}
 		{% block postman_menu %}{% endblock %}

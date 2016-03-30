@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from webapp.forms import UserForm, UserProfileForm, NewGameForm, GroupProfileForm
+from webapp.forms import UserForm, UserProfileForm, NewGameForm, GroupProfileForm, JoinGameForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from decimal import Decimal
-from webapp.models import Game
+from webapp.models import Game, UserProfile, User
 import json
 from django.core import serializers
 
@@ -13,16 +13,30 @@ from django.core import serializers
 
 # Homepage, this view will pass all local games from database
 def index(request):
-    
     # Construct a dictionary to pass to the template engine as its context.
-    # Note the key boldmessage is the same as {{ boldmessage }} in the template!
     game_list = serializers.serialize('json', Game.objects.all())
+    username = request.user
+    userprofiles = serializers.serialize('json', User.objects.all())
+    if request.method == 'POST':
+        try:
+            gameName = request.POST['game']
+            print gameName
+            allGames = Game.objects.all()
+            for n in allGames:
+                if n.__unicode__() == gameName:
+                    n.joinees.add(User.objects.get(username = str(request.user)))
+                    print str(request.user) + " added to game!"
+                print n.__unicode__()
+        except KeyError:
+            print "Where is game??"
+    else:
+        print "request.method was not equal to post"
     
     # Return a rendered response to send to the client.
     # We make use of the shortcut function to make our lives easier.
     # Note that the first parameter is the template we wish to use.
     
-    return render(request, 'webapp/index.html', {'game_list': game_list})
+    return render(request, 'webapp/index.html', {'game_list': game_list, 'username': username, 'userprofiles': userprofiles})
 
 
 def register(request):
@@ -36,7 +50,7 @@ def register(request):
         # Attempt to grab information from the raw form information.
         # Note that we make use of both UserForm and UserProfileForm.
         user_form = UserForm(data=request.POST)
-        #profile_form = UserProfileForm(data=request.POST)
+        profile_form = UserProfileForm(data=request.POST)
         
         # If the two forms are valid...
         if user_form.is_valid(): #and profile_form.is_valid():
@@ -51,8 +65,9 @@ def register(request):
             # Now sort out the UserProfile instance.
             # Since we need to set the user attribute ourselves, we set commit=False.
             # This delays saving the model until we're ready to avoid integrity problems.
-            #profile = profile_form.save(commit=False)
-            #profile.user = user
+            profile = profile_form.save(commit=False)
+            profile.user = user
+            profile.save()
             
             # Did the user provide a profile picture?
             # If so, we need to get it from the input form and put it in the UserProfile model.
@@ -75,7 +90,7 @@ def register(request):
     # These forms will be blank, ready for user input.
     else:
         user_form = UserForm()
-    #profile_form = UserProfileForm()
+    profile_form = UserProfileForm()
 
     # Render the template depending on the context.
     return render(request,
@@ -145,13 +160,30 @@ def creategame(request):
         form = NewGameForm(request.POST)
         if form.is_valid():
             game = form.save(commit=False)
-            game.owner = request.user
+            game.owner = UserProfile.objects.get(user__username = str(request.user))
+            game.ownerName = str(request.user)
             game.published_date = timezone.now()
+            game.save()
+            game.joinees.add(User.objects.get(username = str(request.user)))
             game.save()
             return redirect('/webapp/')
     else:
         form = NewGameForm()
     return render(request, 'webapp/newgame.html', {'form': form})
+
+@login_required
+def profile_view(request, username):
+    if username == str(request.user):
+        editable = 1
+    else:
+        editable = 0
+    print request.user
+    print username
+    account = UserProfile.objects.get(user__username = username)
+    image = account.picture
+    name = account.user.username
+    friends = account.friends
+    return render(request, 'webapp/profile_view.html', {'image': image, 'editable': editable, 'name': name, 'friends': friends,})
 
 
 @login_required

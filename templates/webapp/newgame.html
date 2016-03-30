@@ -109,6 +109,9 @@
 
 
 {% block body_block %}
+
+<p>&nbsp;</p>
+    <p>&nbsp;</p>
         <h1>Create a new game.</h1>
 
 
@@ -127,26 +130,16 @@
                 latLng: pos
               }, function(responses) {
                 if (responses && responses.length > 0) {
-                  updateMarkerAddress(responses[0].formatted_address);
                     document.getElementById("id_address").value=responses[0].formatted_address;
                 } else {
-                  updateMarkerAddress('Cannot determine address at this location.');
                 }
               });
-            }
-
-            function updateMarkerPosition(latLng) {
-              document.getElementById('info').innerHTML = "Lat: " + latLng.lat() + " Lng: " + latLng.lng();
             }
             
             function updateLatLngAdd(marker) {
                 geocodePosition(marker.getPosition());
                 document.getElementById("id_latitude").value=marker.getPosition().lat().toFixed(6);
                 document.getElementById("id_longitude").value=marker.getPosition().lng().toFixed(6);
-            }
-
-            function updateMarkerAddress(str) {
-              document.getElementById('address').innerHTML = str;
             }
             
             function initMap() {
@@ -193,7 +186,6 @@
                     }
                 
                 // Update current position info.
-                updateMarkerPosition(latLng);
                 geocodePosition(latLng);
                 
                 // Listen for the event fired when the user selects a prediction and retrieve
@@ -214,11 +206,6 @@
                     updateLatLngAdd(marker);
                 });
                 
-                // Add dragging event listeners.
-
-                marker.addListener('drag', function() {
-                    updateMarkerPosition(marker.getPosition());
-                });
 
                 marker.addListener('dragend', function() {
                     updateLatLngAdd(marker);
@@ -265,11 +252,4 @@
             <!-- Provide a button to click to submit the form. -->
             <input type="submit" name="submit" value="Create" class="submitbutton"/>
         </form>
-
-        
-        <div id="info">thishsouldchange</div>
-        <div id="address">thishsouldchange</div>
-
-        
-
 {% endblock %}

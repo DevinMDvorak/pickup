@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %} Group Manager{% endblock %}
+
+
+{% block head %}
+
+<style>
+    #top_container {
+        width:100%;
+        background-color: #6C7C8B;
+        height:250px;
+        position: relative;
+    }
+    #profile_pic {
+        display: block;
+        position: relative;
+        top: 50%;
+        transform: translateY(-40%);
+        margin-left: auto;
+        margin-right: auto;
+        vertical-align: middle;
+        align: middle;
+        height: 80%;
+    }
+</style>
+
+{% endblock %}
+
+{% block body_block %}
+    <div id="top_container">
+        <img id="profile_pic" src="/media/{{ image }}">
+    </div>
+    <p>{{ name }}</p>
+    <p>{{ editable }}</p>
+    <p>{{ friends }}</p>
+	
+{% endblock %}

@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
 from decimal import Decimal
+import uuid
 
 
 # Create your models here.
@@ -11,7 +12,8 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
     
     # Extra attributes that are added to the default user
-    picture = models.ImageField(upload_to='profile_images', blank=True)
+    picture = models.ImageField(upload_to='profile_images', default='static/images/defaultpic.png')
+    friends = models.ManyToManyField("self", blank=True)
     
     # We will need to add some fields such as location, favorite sport, distance willing to travel, etc.
     
@@ -39,7 +41,9 @@ class Game(models.Model):
         (BASEBALL, 'Baseball'),
         (ULTIMATEFRISBEE, 'Ultimate Frisbee'),
     )
-    owner = models.CharField(max_length = 16)
+    owner = models.ForeignKey(UserProfile, related_name="profiles")
+    ownerName = models.CharField(max_length = 30)
+    joinees = models.ManyToManyField(User, blank=True)
     sport = models.CharField(max_length = 32, choices = SPORTS)
     date = models.DateField((u"Date"), blank=False)
     time = models.TimeField((u"Time"), blank=False)
@@ -60,7 +64,7 @@ class Game(models.Model):
         )
 
     def __unicode__(self):
-        return self.owner + " " + self.sport + " " + str(self.date)
+        return self.owner.user.username + " " + self.sport + " " + str(self.date)
 
 
 class GroupProfile(models.Model):

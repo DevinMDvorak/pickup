@@ -39,3 +39,8 @@ class GroupProfileForm(forms.ModelForm):
 	class Meta:
 		model = GroupProfile
 		fields = ('name', 'creator', 'sport', 'zipcode',)
+
+class JoinGameForm(forms.ModelForm):
+    class Meta:
+        model = Game
+        fields = ('joinees',)
