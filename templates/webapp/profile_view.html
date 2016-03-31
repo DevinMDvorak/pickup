@@ -6,33 +6,63 @@
 {% block head %}
 
 <style>
+    #big_container {
+        transform: translateY(75px);
+        width: 85%;
+        height: 800px;
+        background-color: white;
+        margin-left: auto;
+        margin-right: auto;
+    }
     #top_container {
         width:100%;
-        background-color: #6C7C8B;
-        height:250px;
+        background-color: #333333;
+        height:100px;
         position: relative;
+        overflow: visible;
     }
     #profile_pic {
         display: block;
-        position: relative;
-        top: 50%;
-        transform: translateY(-40%);
-        margin-left: auto;
-        margin-right: auto;
+        position: absolute;
+        margin-left: 5%;
         vertical-align: middle;
         align: middle;
-        height: 80%;
+        height: 120%;
+        box-shadow: 5px 5px 5px #888888;
+        border: 4px solid lightgray;
+        transform: translateY(-10%);
+        background: white;
+    }
+    #profile_name {
+        color: white;
+        font-size: 20px;
+        position: absolute;
+        margin-left: 40%;
+        vertical-align: middle;
+        background: clear;
+    }
+    #bio {
+        width: 50%;
+        transform: translateY(125px);
+        margin-left: 25%;
     }
 </style>
 
 {% endblock %}
 
 {% block body_block %}
-    <div id="top_container">
-        <img id="profile_pic" src="/media/{{ image }}">
+    <div id="big_container">
+        <div id="top_container">
+            <img id="profile_pic" src="/media/{{ image }}">
+            <div id="profile_name">
+                <p>
+                    {{ name }} <br> {{ username }}
+                </p
+            </div>
+        </div>
+        <div id="bio">
+            <br>{{ bio }}
+        </div>
     </div>
-    <p>{{ name }}</p>
-    <p>{{ editable }}</p>
-    <p>{{ friends }}</p>
 	
 {% endblock %}

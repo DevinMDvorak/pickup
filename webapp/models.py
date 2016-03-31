@@ -14,6 +14,7 @@ class UserProfile(models.Model):
     # Extra attributes that are added to the default user
     picture = models.ImageField(upload_to='profile_images', default='static/images/defaultpic.png')
     friends = models.ManyToManyField("self", blank=True)
+    bio = models.TextField(max_length = 512, default="")
     
     # We will need to add some fields such as location, favorite sport, distance willing to travel, etc.
     

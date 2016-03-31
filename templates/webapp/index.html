@@ -19,6 +19,13 @@
         .formclass {
             background-color: white;
         }
+        .links:link {
+            text-decoration: none;
+            color: gray;
+        }
+        .links:visited {
+            color: gray;
+        }
         #map_container {
             width:95%;
             margin:2.5%;
@@ -46,7 +53,7 @@
         }
         #map_panel {
             width: 100%;
-            height: 20%;
+            min-height: 20%;
             background-color: white;
             overflow: hidden;
             border-bottom-color: #CCC;
@@ -196,25 +203,28 @@
             element.id = 'map_panel';
             left.id = 'map_panel_left';
             right.id = 'map_panel_right';
-            var joinString = "";
+            var joinString = "<p> Players: ";
             for (var j in closest[i].joinees) {
                 if (closest[i].joinees[j] == String("{{ username|safe }}")) {
                     joinedyet = 1;
                 }
-                joinString = joinString.concat(closest[i].joinees[j] + " ");
+                //joinString = joinString.concat(closest[i].joinees[j] + " ");
+                joinString = joinString.concat('<a class="links" href="account/' + closest[i].joinees[j] + '">'+ closest[i].joinees[j] +'</a>' + " ");
             }
+            joinString = joinString.concat('</p>');
+            
+            left.innerHTML="<br>" + closest[i].sport + " Game " + closest[i].distanceApart + " Miles Away<br>" + 
+            closest[i].date + " at " + closest[i].time + joinString;
+                
             if(joinedyet == 0) {
-                left.innerHTML="<br>" + closest[i].sport + " Game " + closest[i].distanceApart + " Miles Away<br>" + 
-                closest[i].date + " at " + closest[i].time + '<form name="joingame" action="/webapp/" method="post" enctype="multipart/form-data">' + 
+                right.innerHTML = "<br>"+ closest[i].description + '<form name="joingame" action="/webapp/" method="post" enctype="multipart/form-data">' + 
                 '<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">' + '<input type="hidden" name="game" value="' + closest[i].owner + " "
                 + closest[i].sport + " " + closest[i].rawDate +'"/>' + 
                 '<input type="submit" value="Join Game" />' + '</form>';
             }
             if(joinedyet == 1) {
-                left.innerHTML="<br>" + closest[i].sport + " Game " + closest[i].distanceApart + " Miles Away<br>" + 
-                closest[i].date + " at " + closest[i].time + "<br>with " + joinString
+                right.innerHTML = "<br>"+ closest[i].description
             }
-            right.innerHTML = "<br>"+ closest[i].description;
             //Alternating boxes will have alternating colors
             if(i%2 == 0) {
                 element.style.backgroundColor="#F3F3F3";

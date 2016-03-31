@@ -46,6 +46,7 @@
     </head>
 
     <body bgcolor="#4F659C">
+    
 
         <ul>
         {% if user.is_authenticated %}
@@ -61,7 +62,8 @@
         {% endif %}
         </ul>
 
-        {% block body_block %}{% endblock %}
+        {% block body_block %}
+        {% endblock %}
 		{% block content %}{% endblock %}
 		{% block postman_menu %}{% endblock %}
         

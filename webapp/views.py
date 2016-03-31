@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from webapp.forms import UserForm, UserProfileForm, NewGameForm, GroupProfileForm, JoinGameForm
 from django.contrib.auth import authenticate, login, logout
@@ -25,6 +25,7 @@ def index(request):
             for n in allGames:
                 if n.__unicode__() == gameName:
                     n.joinees.add(User.objects.get(username = str(request.user)))
+                    game_list = serializers.serialize('json', Game.objects.all())
                     print str(request.user) + " added to game!"
                 print n.__unicode__()
         except KeyError:
@@ -181,9 +182,11 @@ def profile_view(request, username):
     print username
     account = UserProfile.objects.get(user__username = username)
     image = account.picture
-    name = account.user.username
+    username = account.user.username
     friends = account.friends
-    return render(request, 'webapp/profile_view.html', {'image': image, 'editable': editable, 'name': name, 'friends': friends,})
+    name = str(account.user.first_name) + " " + str(account.user.last_name)
+    bio = account.bio
+    return render(request, 'webapp/profile_view.html', {'image': image, 'editable': editable, 'username': username, 'friends': friends, 'name': name, 'bio': bio})
 
 
 @login_required
