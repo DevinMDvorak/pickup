@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from decimal import Decimal
-from webapp.models import Game, UserProfile, User
+from webapp.models import Game, UserProfile, User, GroupProfile
 import json
 from django.core import serializers
 
@@ -206,7 +206,8 @@ def groups(request):
 @login_required
 def groups_list(request):
 	groups_list = GroupProfile.objects.all()
-	output = ', '.join([a.name for a in groups_list])
+	# output = ', '.join([a.name for a in groups_list])
+	output = groups_list
 	return render(request, 'webapp/groupslist.html', {'output': output})
 
 
