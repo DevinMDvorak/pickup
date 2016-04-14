@@ -61,7 +61,8 @@ class Game(models.Model):
             time = self.time.isoformat(),
             description = self.description,
             latitude = self.latitude,
-            longitude = self.longitude
+            longitude = self.longitude,
+            address = self.address
         )
 
     def __unicode__(self):

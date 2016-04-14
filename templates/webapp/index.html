@@ -14,9 +14,6 @@
             outline: none;
             margin-rigth: auto;
             font-size: 22px;
-        }
-
-        .formclass {
             background-color: white;
         }
         .links:link {
@@ -29,10 +26,10 @@
         #map_container {
             width:95%;
             margin:2.5%;
-            background-color: #6C7C8B;
+            background-color: lightgray;
             height:660px;
             position: relative;
-            overflow:hidden;
+            overflow: hidden;
         }
         #map {
             width: 45%;
@@ -83,15 +80,46 @@
                 box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
             }
         #pac-input {
-                background-color: #fff;
-                font-family: Roboto;
-                font-size: 15px;
-                font-weight: 300;
-                margin-left: 12px;
-                padding: 0 11px 0 13px;
-                text-overflow: ellipsis;
-                width: 300px;
-            }
+            background-color: #fff;
+            font-family: Roboto;
+            font-size: 15px;
+            font-weight: 300;
+            padding: 0 11px 0 13px;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
+        #pac-input2 {
+            background-color: #fff;
+            font-family: Roboto;
+            font-size: 15px;
+            font-weight: 300;
+            padding: 0 11px 0 13px;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
+        #pac-input3 {
+            background-color: #fff;
+            font-family: Roboto;
+            font-size: 15px;
+            font-weight: 300;
+            padding: 0 11px 0 13px;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
+        
+        #search-button {
+            color: white;
+            background-color: #104962;
+            font-family: Roboto;
+            font-size: 15px;
+            font-weight: 300;
+            padding: 0 11px 0 13px;
+            text-overflow: ellipsis;
+            width: 40%;
+            margin-left: 30%;
+            margin-top: 15px;
+        }
+        
         #pac-input:focus {
                 border-color: #4d90fe;
             }
@@ -111,6 +139,176 @@
         #target {
                 width: 345px;
             }
+        
+        #background-div {
+            height: 460px;
+            width: 95%;
+            min-width: 640px;
+            background-color: lightgray;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+        }
+        #background-div2 {
+            height: 400px;
+            width: calc(100% - 40px);
+            background-color: lightgray;
+            margin-left: 20px;
+            margin-right: 20px;
+            transform: translateY(60px);
+            position: absolute;
+        }
+        #maindiv {
+            min-height: 800px;
+            height: auto;
+            width: 95%;
+            background-color: lightgray;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #maindiv2 {
+            height: 50px;
+            width: 95%;
+            background-color: lightgray;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .info-panel {
+            position: relative;
+            height: 150px;
+            width: 80%;
+            background-color: white;
+            margin-left: auto;
+            margin-right: auto;
+            /*border-radius: 8px;*/
+            box-shadow: 0 0 5px 2px rgba(0,0,0,.35);
+            min-width: 300px;
+            max-width: 550px;
+            transform: translateY(20px);
+        }
+        #additional-info {
+            background-color: transparent;
+            display: none;
+            position: absolute;
+            bottom: 0;
+            margin-left: 20px;
+            width: 40%;
+        }
+        #maindiv .info-panel {
+          margin-bottom: 15px;
+        }
+        #main-info {
+            width: 100%;
+        }
+        #sportname {
+            color: #F7584C;
+            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
+            font-size: 28px;
+            margin-top: 15px;
+            margin-left: 20px;
+            margin-bottom: -3px;
+            display: inline-block;
+        }
+        #timedate {
+            color: #06425C;
+            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
+            font-size: 20px;
+            margin-top: -3px;
+            margin-left: 20px;
+            margin-bottom: 6px;
+            display: inline-block;
+        }
+        #address {
+            color: #06425C;
+            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
+            font-size: 14px;
+            margin-top: 0px;
+            margin-left: 20px;
+            margin-bottom: 0px;
+            display: inline-block;
+        }
+        #distance {
+            color: black;
+            font-family: 'Arial', 'Helvetica Rounded', Arial, sans-serif;
+            font-size: 12px;
+            margin-left: 20px;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            display: inline-block;
+        }
+        #arrow-down {
+            width: 0px; 
+            height: 0px; 
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 10px solid #06425C;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #arrow-up {
+            width: 0px; 
+            height: 0px; 
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 10px solid #06425C;
+            margin-left: auto;
+            margin-right: auto;
+            display: none;
+        }
+        #search-area {
+            position: absolute;
+            width: 300px;
+            height: 400px;
+            background: white;
+            display: inline-block;
+        }
+        #search-area-upper {
+            position: absolute;
+            width: 250px;
+            height: 50px;
+            background: white;
+            margin-left: 25px;
+            margin-top: 20px;
+        }
+        #search-area-lower {
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            background: white;
+            margin-left: 25px;
+            margin-top: 80px;
+        }
+        #search-border {
+            border-bottom-style: inset;
+        }
+        #search-header {
+            background-color: #fff;
+            font-family: Roboto;
+            font-size: 22px;
+            font-weight: 300;
+            padding: 0 11px 0 13px;
+            text-overflow: ellipsis;
+            right: 0;
+            left: 0;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+        #map-area {
+            position: absolute;
+            min-width: 300px;
+            width: calc(100% - 300px);/*remember calc may not work on some devices (android mobile)*/
+            height: 400px;
+            background: white;
+            display: inline-block;
+            right: 0;
+        }
+        #info-bar {
+            width:85%;
+            border-bottom-style:inset;
+            margin-left: auto;
+            margin-right: auto;
+        }
     </style>
 {% endblock %}
 
@@ -118,14 +316,48 @@
 {% block body_block %}
 {% if user.is_authenticated %}
             
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <input id="pac-input" class="controls" display='none' type="text" placeholder="Search Box">
-    <div id="map_container">
+    <div id="background-div">
+    <div id="background-div2">
+    <div id="search-area">
+    <div id="search-area-upper">
+        <p id="search-header">Filter</p>
+    </div>
+    <div id="search-area-lower">
+        <p id="search-border"></p>
+        <input id="pac-input" class="controls" display='none' type="text" placeholder="Location">
+        <p id="search-border"></p>
+        <select id="pac-input3" class="controls">
+            <option value="" disabled selected>Choose a sport</option>
+            <option value="Baseball">Baseball</option>
+            <option value="Basketball">Basketball</option>
+            <option value="Cycling">Cycling</option>
+            <option value="Football">Football</option>
+            <option value="Soccer">Soccer</option>
+            <option value="Tennis">Tennis</option>
+            <option value="Ultimate Frisbee">Ultimate Frisbee</option>
+            <option value="Other">Other</option>
+        </select>
+        <p id="search-border"></p>
+        <select id="pac-input2" class="controls">
+            <option value="" disabled selected>Search radius</option>
+            <option value=10>10 Miles</option>
+            <option value=25>25 Miles</option>
+            <option value=50>50 Miles</option>
+        </select>
+        <input type="submit" onclick="return closestGames();" value="Search" class="controls" id="search-button"/>
+    </div>
+    </div>
+    <div id="map-area"></div>
+    </div>
+    </div>
+
+    <!--<div id="map_container">
         <div id="map"></div>
         <div id="map_text">
         </div>
-    </div>
+    </div>-->
+    <div id="maindiv"></div>
+    <div id="maindiv2"></div>
 
 <script src="http://maps.googleapis.com/maps/api/js?&libraries=places,geometry"></script>
 
@@ -138,6 +370,9 @@
     var markers=[];
     var contents = [];
     var infowindows = [];
+    var military_time = "";
+    var standard_time = "";
+    var latLng = new google.maps.LatLng(36.0764, -94.1608);
 
     function popupCenter(url, title, w, h) {
         var left = (screen.width/2)-(w/2);
@@ -156,13 +391,22 @@
         num_date = game_list[i].fields.date, read_date = num_date.split('-');
         readable_date = months[(read_date[1]/1)] + ' ' + read_date[2] + ', ' + read_date[0]
         
+        military_time = game_list[i].fields.time, read_time = military_time.split(':');
+        var hours = Number(read_time[0]);
+        var minutes = Number(read_time[1]);
+        standard_time = "" + ((hours >12) ? hours - 12 : hours);  // get hours
+        standard_time += (minutes < 10) ? ":0" + minutes : ":" + minutes;  // get minutes
+        standard_time += (hours >= 12) ? " P.M." : " A.M.";  // get AM/PM
+        
         markers[i].index = i; //add index property
         markers[i].sport = game_list[i].fields.sport;
         markers[i].description = game_list[i].fields.description;
         markers[i].date = readable_date;
         markers[i].rawDate = game_list[i].fields.date;
-        markers[i].time = game_list[i].fields.time;
+        markers[i].military = game_list[i].fields.time;
+        markers[i].time = standard_time;
         markers[i].owner = game_list[i].fields.ownerName;
+        markers[i].address = game_list[i].fields.address;
         markers[i].joinees = {};
         //Need to change this logic.  It works but may not be safe if accounts are deleted
         //Should be something like if user_list.pk == game_list.fields.joinees[var] then user_list.[gamelistjoinee].username
@@ -180,22 +424,79 @@
         });
     }
     
-    function closestGames(location, markers) {
-        var closest=[];
-        var distanceApart;
-        document.getElementById("map_text").innerHTML="";
+    function filterSearch() {
         
-        for (i= 0; i < markers.length; i++) {
-            distanceApart = google.maps.geometry.spherical.computeDistanceBetween(location, markers[i].getPosition());
-            if (distanceApart < 80000) {
-                markers[i].distanceApart = Math.round(distanceApart/160.934)/10;
-                closest.push(markers[i]);
+    }
+    
+    function closestGames(radius) {
+        var closest=[];
+        var location = latLng;
+        var distanceApart;
+        var sport;
+        
+        var radiusoptions = document.getElementById("pac-input2");
+        radius = radiusoptions.options[radiusoptions.selectedIndex].value;
+        document.getElementById("maindiv").innerHTML="";
+        
+        var sportoptions = document.getElementById("pac-input3");
+        sport = sportoptions.options[sportoptions.selectedIndex].value;
+        
+        if (radius == 10) {
+            for (i= 0; i < markers.length; i++) {
+                distanceApart = google.maps.geometry.spherical.computeDistanceBetween(location, markers[i].getPosition());
+                if (distanceApart < 16093) {
+                    markers[i].distanceApart = Math.round(distanceApart/160.934)/10;
+                    closest.push(markers[i]);
+                }
             }
         }
-        
+        else if (radius == 25) {
+            for (i= 0; i < markers.length; i++) {
+                distanceApart = google.maps.geometry.spherical.computeDistanceBetween(location, markers[i].getPosition());
+                if (distanceApart < 40233) {
+                    markers[i].distanceApart = Math.round(distanceApart/160.934)/10;
+                    closest.push(markers[i]);
+                }
+            }
+        }
+        else {
+            for (i= 0; i < markers.length; i++) {
+                distanceApart = google.maps.geometry.spherical.computeDistanceBetween(location, markers[i].getPosition());
+                if (distanceApart < 80467) {
+                    markers[i].distanceApart = Math.round(distanceApart/160.934)/10;
+                    closest.push(markers[i]);
+                }
+            }
+        }
         //Loop through the array of the closest markers and add each markers
         //Info box on the right part of the screen
         for (i= 0; i < closest.length; i++) {
+            if ( sport == closest[i].sport || sport == "") {
+                
+            var infopanel = document.createElement('div');
+            infopanel.className = 'info-panel';
+            infopanel.style.height = "150px";
+            var maininfo = document.createElement('div');
+            maininfo.id = 'main-info';
+            maininfo.innerHTML = "<p id='sportname'>" + closest[i].sport + "</p><br>" + 
+                "<p id='timedate'>" + closest[i].date + ' at ' + closest[i].time + "</p><br>" + 
+                "<p id ='address'>" + closest[i].address + "</p><br>" +
+                "<p id ='distance'>" + closest[i].distanceApart + " miles away</p><br>" + 
+                "<p id ='info-bar'></p>";
+            if ((i+1) == closest.length) {
+                infopanel.style.marginBottom = "0px";
+            }
+            
+            //var arrowdown = document.createElement('div');
+            //arrowdown.id = 'arrow-down';
+            
+            //var additional = document.createElement('div');
+            //additional.id = 'additional-info';
+             
+            
+            
+            
+            
             var joinedyet = 0;
             var element = document.createElement('div');
             var left = document.createElement('div');
@@ -213,7 +514,7 @@
             }
             joinString = joinString.concat('</p>');
             
-            left.innerHTML="<br>" + closest[i].sport + " Game " + closest[i].distanceApart + " Miles Away<br>" + 
+            /*left.innerHTML="<br>" + closest[i].sport + " Game " + closest[i].distanceApart + " Miles Away<br>" + 
             closest[i].date + " at " + closest[i].time + joinString;
                 
             if(joinedyet == 0) {
@@ -231,13 +532,23 @@
             }
             element.appendChild(left);
             element.appendChild(right);
-            document.getElementById('map_text').appendChild(element);
+            document.getElementById('map_text').appendChild(element);*/
+            
+            
+            
+            
+            //additional.innerHTML = joinString;
+            
+            infopanel.appendChild(maininfo);
+            //infopanel.appendChild(arrowdown);
+            //infopanel.appendChild(additional);
+            document.getElementById('maindiv').appendChild(infopanel);
+        }
         }
     }
             
             function initMap() {
-                var latLng = new google.maps.LatLng(36.0764, -94.1608);
-                var mapDiv = document.getElementById('map');
+                var mapDiv = document.getElementById('map-area');
                 var map = new google.maps.Map(mapDiv, {
                     center: latLng,
                     zoom: 13,
@@ -247,7 +558,7 @@
                 // Create the search box and link it to the UI element.
                 var input = document.getElementById('pac-input');
                 var autoComplete = new google.maps.places.Autocomplete(input);
-                map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+                //map.controls[google.maps.ControlPosition.TOP_LEFT].push(input); This code links it to map
                 
                 
                 for (i = 0; i < game_list.length; i++) {
@@ -263,10 +574,6 @@
                 // Try HTML5 geolocation.
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(function(position) {
-                        latLng = {
-                            lat: position.coords.latitude,
-                            lng: position.coords.longitude
-                        };
 
                         /*infoWindow.setPosition(pos);
                         infoWindow.setContent('Current location.');*/
@@ -279,7 +586,7 @@
                     handleLocationError(false, infoWindow, map.getCenter());
                     }
                 
-                closestGames(latLng, markers);
+                closestGames(50);
                 // Listen for the event fired when the user selects a prediction and retrieve
                 // more details for that place.
                 autoComplete.addListener('place_changed', function() {
@@ -295,7 +602,7 @@
                     // Create a marker for each place.
                     map.setCenter(latLng);
                     
-                    closestGames(latLng, markers);
+                    closestGames(50);
                 });
                 
 
@@ -313,6 +620,19 @@
             }
 
             google.maps.event.addDomListener(window, 'load', initMap);
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script>
+    $(document).on('click', ".info-panel", function () {
+        //if($(this).closest('div').find('#arrow-down').is(":visible")) {
+            //$(this).closest('div').find('#arrow-down').toggle();
+        //}
+        //$(this).animate({
+            //height: ($(this).height() == 150) ? 200 : 150
+        //}, 200);
+        //$(this).closest('div').find('#additional-info').toggle();
+    });
 </script>
 
 {% endif %}
