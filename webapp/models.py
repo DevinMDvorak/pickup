@@ -61,7 +61,8 @@ class Game(models.Model):
             time = self.time.isoformat(),
             description = self.description,
             latitude = self.latitude,
-            longitude = self.longitude
+            longitude = self.longitude,
+            address = self.address
         )
 
     def __unicode__(self):
@@ -73,6 +74,7 @@ class GroupProfile(models.Model):
 	creator = models.CharField(max_length=50)
 	sport = models.CharField(max_length=50)
 	zipcode = models.IntegerField()
+	members = models.ManyToManyField(User, blank=True)
 
 	def __unicode__(self):
         # This should be self.name

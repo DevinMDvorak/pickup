@@ -11,6 +11,6 @@ urlpatterns = patterns('',
                         url(r'^newgame/$', views.creategame, name='newgame'),
                         url(r'^groups/$', views.groups, name='groups'), # Create groups
 						url(r'^groupslist/$', views.groups_list, name='groupslist'), # View list of groups
-						url(r'^(?P<group_id>[0-9]+)/group/$', views.group, name='group'), # View individual groups
-                       url(r'^account/(?P<username>\w+)/$', views.profile_view, name='profile_view'),
+						url(r'^groupslist/(?P<name>\w+)/$', views.group_view, name='group'), # View individual groups
+                        url(r'^account/(?P<username>\w+)/$', views.profile_view, name='profile_view'),
 						)

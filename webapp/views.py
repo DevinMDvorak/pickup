@@ -197,7 +197,7 @@ def groups(request):
 			group = group_form.save(commit=False)
 			group.published_date = timezone.now()
 			group.save()
-			return redirect('/webapp/groups.html')
+			return redirect('/webapp/index.html')
 	else:
 		group_form = GroupProfileForm()
 	return render(request, 'webapp/groups.html', {'group_form': group_form})
@@ -206,11 +206,10 @@ def groups(request):
 @login_required
 def groups_list(request):
 	groups_list = GroupProfile.objects.all()
-	# output = ', '.join([a.name for a in groups_list])
-	output = groups_list
+	output = ' '.join([a.name for a in groups_list])
 	return render(request, 'webapp/groupslist.html', {'output': output})
 
 
 @login_required	
-def group(request, group_id):
-	return HttpResponse("You're viewing group %s." % group_id)
+def group_view(request, name):
+	print name
