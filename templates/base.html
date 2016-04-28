@@ -15,11 +15,13 @@
                 margin: 0;
                 padding: 0;
                 overflow: hidden;
-                background-color: #333;
-                position: fixed;
+                background-color: #06425C;
+                position: absolute;
                 top: 0;
                 width: 100%;
                 z-index: 1;
+                opacity: .95;
+                /*background-image: url('/static/images/orangebackground.jpg');*/
             }
 
             li {
@@ -28,26 +30,35 @@
 
             li a {
                 display: block;
-                color: white;
+                font-family: "Arial Black", Gadget, sans-serif;
+                color: #F2F2F2;
                 text-align: center;
                 padding: 14px 16px;
                 text-decoration: none;
             }
 
             li a:hover:not(.active) {
-                background-color: #111;
+                background-color: #B7695C;
             }
 
             .active {
                 background-color: #4CAF50;
             }
             
+            #navigationbar {
+                overflow: hidden;
+                background-image: url('/static/images/orangebackground.jpg');
+            }
+            
         </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     </head>
-
-    <body bgcolor="#4F659C">
+    {% load static from staticfiles %}
+    <body background='/static/images/GrayBackground.png'><!-- #51A39D old background color -->
+    <!--background='/static/images/GrayBackground.jpg'-->
+    <!--<img id="profile_pic" src="/static/images/olivebackground.jpg">-->
     
-
+        <div id=navigationbar background='/static/images/orangebackground.jpg'>
         <ul>
         {% if user.is_authenticated %}
             <li style="float:right"><a href="/webapp/logout/">Logout</a></li>
@@ -62,6 +73,7 @@
             <li style="float:right"><a href="/webapp/login/">Login</a></li>
         {% endif %}
         </ul>
+        </div>
 
         {% block body_block %}
         {% endblock %}

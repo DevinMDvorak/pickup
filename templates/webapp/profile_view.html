@@ -20,11 +20,12 @@
         height:100px;
         position: relative;
         overflow: visible;
+        box-shadow: 0 0 5px 2px rgba(0,0,0,.35);
     }
     #profile_pic {
         display: block;
         position: absolute;
-        margin-left: 5%;
+        margin-left: 30px;
         vertical-align: middle;
         align: middle;
         height: 120%;
@@ -37,14 +38,59 @@
         color: white;
         font-size: 20px;
         position: absolute;
-        margin-left: 40%;
+        margin-left: 260px;
         vertical-align: middle;
         background: clear;
+        display: inline-block;
     }
-    #bio {
-        width: 50%;
-        transform: translateY(125px);
-        margin-left: 25%;
+    #age_sex {
+        color: white;
+        font-size: 20px;
+        position: relative;
+        margin-right: 40px;
+        float: right;
+        vertical-align: middle;
+        background: clear;
+        display: inline-block;
+    }
+    #main_container {
+        width: auto;
+        transform: translateY(50px);
+        margin-left: 30px;
+        margin-right: 30px;
+    }
+    #main_left {
+        width: 30%;
+        height: 600px;
+        border-right: 2px solid lightgray;
+        float: left;
+    }
+    #main_center {
+        width: 30%;
+        height: 600px;
+        float: left;
+        margin-left: 4%;
+        margin-right: 4%;
+        text-align: center;
+    }
+    #main_right {
+        width: 30%;
+        height: 600px;
+        border-left: 2px solid lightgray;
+        float: left;
+        text-align: center;
+    }
+    .info-panel {
+        position: relative;
+        /*height: 150px;*/
+        width: 95%;
+        background-color: white;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 20px;
+        /*border-radius: 8px;*/
+        box-shadow: 0 0 5px 2px rgba(0,0,0,.35);
+        transform: translateY(20px);
     }
 </style>
 
@@ -57,12 +103,48 @@
             <div id="profile_name">
                 <p>
                     {{ name }} <br> {{ username }}
-                </p
+                </p>
+            </div>
+            <div id="age_sex">
+                <p>
+                    {{ sex }} <br> {{ age }}
+                </p>
             </div>
         </div>
-        <div id="bio">
-            <br>{{ bio }}
+        <div id="main_container">
+            <p id="main_left"><br><br>{{ bio }}</p>
+            <p id="main_center"><br>Recent Games Created<br></p>
+            <p id="main_right"><br>Recent Games Joined<br></p>
         </div>
     </div>
+    <script>
+        var games = {{ games|safe }};
+        var username = "{{ username }}";
+        for (i = 0; i < games.length; i++) {
+            if(games[i].fields.ownerName == username){
+                var child = document.createElement('div');
+                child.className = "info-panel";
+                child.innerHTML = games[i].fields.sport + " at " + 
+                games[i].fields.address + "<br>" + games[i].fields.time;
+                document.getElementById('main_center').appendChild(child);
+            }
+        }
+        
+        for (i = 0; i < games.length; i++) {
+            if(games[i].fields.ownerName != username){
+                var child = document.createElement('div');
+                child.className = "info-panel";
+                child.innerHTML = games[i].fields.sport + "  with " +
+                games[i].fields.ownerName + "<br>at " + games[i].fields.address +
+                "<br>" + games[i].fields.time;
+                document.getElementById('main_right').appendChild(child);
+            }
+        }
+    </script>
 	
 {% endblock %}
+
+
+
+
+
