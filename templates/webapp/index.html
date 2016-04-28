@@ -70,15 +70,40 @@
             margin-top: 2%;
         }
         .controls {
-                margin-top: 10px;
-                border: 1px solid transparent;
-                border-radius: 2px 0 0 2px;
-                box-sizing: border-box;
-                -moz-box-sizing: border-box;
-                height: 32px;
-                outline: none;
-                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-            }
+            margin-top: 10px;
+            border: 1px solid transparent;
+            border-radius: 2px 0 0 2px;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            height: 32px;
+            outline: none;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+        .controls2 {
+            margin-top: 10px;
+            border: 1px solid transparent;
+            border-radius: 2px 0 0 2px;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            height: 32px;
+            outline: none;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            display: inline;
+            float: right;
+            margin-right: 20px;
+        }
+        #search-button2 {
+            color: white;
+            background-color: #104962;
+            font-family: Roboto;
+            font-size: 15px;
+            font-weight: 300;
+            padding: 0 11px 0 13px;
+            text-overflow: ellipsis;
+            width: 100px;
+            margin-top: 15px;
+            display: inline;
+        }
         #pac-input {
             background-color: #fff;
             font-family: Roboto;
@@ -175,7 +200,7 @@
         }
         .info-panel {
             position: relative;
-            height: 150px;
+            /*height: 150px;*/
             width: 80%;
             background-color: white;
             margin-left: auto;
@@ -225,6 +250,26 @@
             margin-top: 0px;
             margin-left: 20px;
             margin-bottom: 0px;
+            display: inline-block;
+        }
+        #extrainfo {
+            color: #06425C;
+            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
+            font-size: 14px;
+            margin-top: 0px;
+            margin-left: 20px;
+            margin-bottom: 10px;
+            margin-right: 20px;
+            display: inline-block;
+        }
+        #description {
+            color: #06425C;
+            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
+            font-size: 14px;
+            margin-top: 0px;
+            margin-left: 20px;
+            margin-bottom: 10px;
+            margin-right: 20px;
             display: inline-block;
         }
         #distance {
@@ -472,20 +517,50 @@
         //Info box on the right part of the screen
         for (i= 0; i < closest.length; i++) {
             if ( sport == closest[i].sport || sport == "") {
+            var joinedyet = 0;
+            var joinString = "<p id='extrainfo'> Players: ";
+            for (var j in closest[i].joinees) {
+                if (closest[i].joinees[j] == String("{{ username|safe }}")) {
+                    joinedyet = 1;
+                }
+                //joinString = joinString.concat(closest[i].joinees[j] + " ");
+                if (closest[i].joinees[j] != closest[i].owner) {
+                    joinString = joinString.concat('<a class="links" href="account/' +
+                    closest[i].joinees[j] + '">'+ closest[i].joinees[j] +'</a>' + " ");
+                }
+            }
+            joinString = joinString.concat('</p>');
                 
-            var infopanel = document.createElement('div');
-            infopanel.className = 'info-panel';
-            infopanel.style.height = "150px";
-            var maininfo = document.createElement('div');
-            maininfo.id = 'main-info';
-            maininfo.innerHTML = "<p id='sportname'>" + closest[i].sport + "</p><br>" + 
+                var infopanel = document.createElement('div');
+                infopanel.className = 'info-panel';
+                var maininfo = document.createElement('div');
+                maininfo.id = 'main-info';
+                if(joinedyet == 1) {
+                    maininfo.innerHTML = '<p id="sportname">'+closest[i].sport+'</p><br>' +
+                    "<p id='timedate'>" + closest[i].date + ' at ' + closest[i].time + "</p><br>" + 
+                    "<p id ='address'>" + closest[i].address + "</p><br>" +
+                    "<p id ='distance'>" + closest[i].distanceApart + " miles away</p><br>" + 
+                    "<p id ='info-bar'></p>";;
+                }
+                if(joinedyet == 0) {
+            maininfo.innerHTML = '<form name="joingame" action="/webapp/" method="post" enctype="multipart/form-data">' + '<label id="sportname">' + closest[i].sport +'</label>' + 
+                '<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">' + '<input type="hidden" name="game" value="' + closest[i].owner + " "
+                + closest[i].sport + " " + closest[i].rawDate +'"/>' + 
+                '<input type="submit" class="controls2" id="search-button2" value="Join Game" />' + '</form>' + "<br>" + 
                 "<p id='timedate'>" + closest[i].date + ' at ' + closest[i].time + "</p><br>" + 
                 "<p id ='address'>" + closest[i].address + "</p><br>" +
                 "<p id ='distance'>" + closest[i].distanceApart + " miles away</p><br>" + 
                 "<p id ='info-bar'></p>";
+                }
             if ((i+1) == closest.length) {
                 infopanel.style.marginBottom = "0px";
             }
+                
+                var extrainfo = document.createElement('div');
+                extrainfo.id = 'main-info';
+                extrainfo.innerHTML = "<p id ='extrainfo'>Creator: " + '<a class="links" href="account/' +
+                    closest[i].owner + '">'+ closest[i].owner +'</a>' + 
+                    "</p>" + joinString + "<br><p id ='description'>" + closest[i].description + "</p>";
             
             //var arrowdown = document.createElement('div');
             //arrowdown.id = 'arrow-down';
@@ -495,24 +570,13 @@
              
             
             
+            //var element = document.createElement('div');
+            //var left = document.createElement('div');
+            //var right = document.createElement('div');
+            //element.id = 'map_panel';
+            //left.id = 'map_panel_left';
+            //right.id = 'map_panel_right';
             
-            
-            var joinedyet = 0;
-            var element = document.createElement('div');
-            var left = document.createElement('div');
-            var right = document.createElement('div');
-            element.id = 'map_panel';
-            left.id = 'map_panel_left';
-            right.id = 'map_panel_right';
-            var joinString = "<p> Players: ";
-            for (var j in closest[i].joinees) {
-                if (closest[i].joinees[j] == String("{{ username|safe }}")) {
-                    joinedyet = 1;
-                }
-                //joinString = joinString.concat(closest[i].joinees[j] + " ");
-                joinString = joinString.concat('<a class="links" href="account/' + closest[i].joinees[j] + '">'+ closest[i].joinees[j] +'</a>' + " ");
-            }
-            joinString = joinString.concat('</p>');
             
             /*left.innerHTML="<br>" + closest[i].sport + " Game " + closest[i].distanceApart + " Miles Away<br>" + 
             closest[i].date + " at " + closest[i].time + joinString;
@@ -540,6 +604,7 @@
             //additional.innerHTML = joinString;
             
             infopanel.appendChild(maininfo);
+            infopanel.appendChild(extrainfo);
             //infopanel.appendChild(arrowdown);
             //infopanel.appendChild(additional);
             document.getElementById('maindiv').appendChild(infopanel);

@@ -80,6 +80,7 @@ def register(request):
     
             # Update our variable to tell the template registration was successful.
             registered = True
+            return render(request, 'webapp/login.html')
         
         # Invalid form or forms - mistakes or something else?
         # Print problems to the terminal.
@@ -178,15 +179,26 @@ def profile_view(request, username):
         editable = 1
     else:
         editable = 0
-    print request.user
-    print username
+    profile_form = UserProfileForm()
     account = UserProfile.objects.get(user__username = username)
     image = account.picture
     username = account.user.username
     friends = account.friends
     name = str(account.user.first_name) + " " + str(account.user.last_name)
     bio = account.bio
-    return render(request, 'webapp/profile_view.html', {'image': image, 'editable': editable, 'username': username, 'friends': friends, 'name': name, 'bio': bio})
+    age = account.age
+    sex = account.sex
+    
+    game_list = Game.objects.filter(joinees__username = username)
+    #game_list = serializers.serialize('json', Game.objects.all())
+    #username = request.user
+    #userprofiles = serializers.serialize('json', User.objects.all())
+    #if request.method == 'POST':
+    #n.joinees.add(User.objects.get(username = str(request.user)))
+    games = serializers.serialize('json', game_list)
+                    
+    
+    return render(request, 'webapp/profile_view.html', {'image': image, 'editable': editable, 'username': username, 'friends': friends, 'name': name, 'bio': bio, 'age': age, 'sex': sex, 'games': games, 'profile_form': profile_form})
 
 
 @login_required

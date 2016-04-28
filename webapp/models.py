@@ -12,9 +12,19 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
     
     # Extra attributes that are added to the default user
-    picture = models.ImageField(upload_to='profile_images', default='static/images/defaultpic.png')
+    picture = models.ImageField(upload_to='profile_images', default='/profile_images/defaultpic.png')
     friends = models.ManyToManyField("self", blank=True)
     bio = models.TextField(max_length = 512, default="")
+    age = models.IntegerField(default = 18)
+    
+    MALE = 'Male'
+    FEMALE = 'Female'
+    SEX = (
+        (MALE, 'Male'),
+        (FEMALE, 'Female'),
+    )
+    
+    sex = models.CharField(max_length = 8, choices = SEX)
     
     # We will need to add some fields such as location, favorite sport, distance willing to travel, etc.
     
