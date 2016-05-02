@@ -8,16 +8,13 @@
 	<h1>View Groups</h1>
 	
 	{% if output %}
-		<ul id="grouplist">
 		{% for name in output %}
 			<a href="/groupslist/{{ name }}/">{{ name }}</a>
 			<br />
 			<br />
 		{% endfor %}
-		</ul>
 	{% else %}
 		<p>No groups available.</p>
 	{% endif %}
-	
 	
 {% endblock %}

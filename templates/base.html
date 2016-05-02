@@ -10,7 +10,7 @@
         <style>
             body {margin:0;}
 
-            #nongrouplistul {
+            ul {
                 list-style-type: none;
                 margin: 0;
                 padding: 0;
@@ -23,7 +23,7 @@
                 opacity: .95;
                 /*background-image: url('/static/images/orangebackground.jpg');*/
             }
-
+			
             li {
                 float: left;
             }
@@ -59,7 +59,7 @@
     <!--<img id="profile_pic" src="/static/images/olivebackground.jpg">-->
     
         <div id="navigationbar" background='/static/images/orangebackground.jpg'>
-        <ul id="nongrouplistul">
+        <ul>
         {% if user.is_authenticated %}
             <li style="float:right"><a href="/webapp/logout/">Logout</a></li>
             <li style="float:left"><a href="/webapp/">Home</a></li>
