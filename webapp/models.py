@@ -87,4 +87,4 @@ class GroupProfile(models.Model):
 
 	def __unicode__(self):
         # This should be self.name
-		return self.name + " - " + self.creator
+		return self.name
