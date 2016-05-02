@@ -209,6 +209,7 @@ def groups(request):
 			group = group_form.save(commit=False)
 			group.published_date = timezone.now()
 			group.save()
+			return redirect('/webapp/')
 	else:
 		group_form = GroupProfileForm()
 	return render(request, 'webapp/groups.html', {'group_form': group_form})
