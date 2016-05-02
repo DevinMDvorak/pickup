@@ -1,9 +1,41 @@
-# pickup
+Setting up the development server to run the project:
 
-Start local server: python manage.py runserver
+Install python (we’re running with python2.7.10 at the moment)
 
-Host server over internet?: python manage.py runserver *IPv4 Address of Computer* + ":8000" (or whatever port number you want within reason)
+Download pip
 
-IP Address of local server:  127.0.0.1:8000/webapp, ../admin
+Run the following commands:
+$pip install django
+$pip install widget-tweaks
+$pip install Pillow
 
-IP Address of host server: *IPv4 Address of Computer + Port* + "/webapp" or "/admin" etc
+Access the main project directory which contains manage.py
+Run the command:
+$python manage.py runserver
+
+Development server should now be up and running
+
+
+All files have more detailed comments within
+Files:
+
+Models.py:
+Contains all of the data objects used to store information (userprofiles, games, groups)
+
+Urls.py:
+Contains paths to all of the site urls
+
+Views.py:
+Handles data that is sent from the site.  There is a view for each webpage (Ex: Login view for when the user posts from the login page)
+
+Forms.py:
+This file takes care of the form fields that are sent to the template and ensures that the data entered is acceptable (Ex: When registering a username will not be accepted if it already exists)
+
+Static folder:
+Contains content such as background images
+
+Templates folder:
+Contains the html files for each view
+
+Media folder:
+Contains folder where all of the profile images are added
