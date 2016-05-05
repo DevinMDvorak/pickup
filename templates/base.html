@@ -54,17 +54,18 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     </head>
     {% load static from staticfiles %}
+	{% load postman_tags %}
     <body background='/static/images/GrayBackground.png'><!-- #51A39D old background color -->
     <!--background='/static/images/GrayBackground.jpg'-->
     <!--<img id="profile_pic" src="/static/images/olivebackground.jpg">-->
     
         <div id="navigationbar" background='/static/images/orangebackground.jpg'>
         <ul>
-        {% if user.is_authenticated %}
+        {% if user.is_authenticated %} {% postman_unread as unread_count %}
             <li style="float:right"><a href="/webapp/logout/">Logout</a></li>
             <li style="float:left"><a href="/webapp/">Home</a></li>
             <li style="float:left"><a href="/webapp/account/{{ user.username}}/">Profile</a></li>
-			<li style="float:left"><a href="/webapp/messages/">Messages</a></li>
+			<li style="float:left"><a href="/webapp/messages/">Messages{% if unread_count %} <strong>({{ unread_count }})</strong>{% endif %}</a></li>
             <li style="float:left"><a href="/webapp/newgame/">Create Game</a></li>
             <li style="float:left"><a href="/webapp/groups/">Create Groups</a></li>
 			<li style="float:left"><a href="/webapp/groupslist/">View Groups</a></li>
