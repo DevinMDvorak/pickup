@@ -1,6 +1,24 @@
 {% extends "postman/base.html" %}
 {% load i18n %}{% load postman_tags %}
 {% block content %}
+<style>
+div#postman{
+	display: block;
+    font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
+	color: #06425C;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+}
+.center {
+    margin: auto;
+}
+button {
+	font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
+	font-size: 18px;
+}
+</style>
+
 <div id="postman">
 <h1>{% if pm_messages|length > 1 %}{% trans "Conversation" %}{% else %}{% trans "Message" %}{% endif %}</h1>
 {% for message in pm_messages %}
@@ -28,7 +46,7 @@
 <h2>{% trans 'Reply' %}</h2>
 <form action="{% url 'postman:reply' reply_to_pk %}?next={{ next_url|urlencode }}" method="post">{% csrf_token %}
 <div id="pm_reply">{{ form.body }}</div>
-<button type="submit">{% trans 'Reply' %}</button>
+<button type="submit">{% trans 'Send' %}</button>
 </form>{% endif %}
 {% endif %}
 {% endfor %}

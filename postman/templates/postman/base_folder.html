@@ -8,6 +8,28 @@ If the real implementation is to be used, just make sure that 'pagination' is de
 in the INSTALLED_APPS setting.
 {% endcomment %}
 {% block content %}
+
+<style>
+div#postman{
+	display: block;
+    font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
+	color: #06425C;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+}
+table#pm_messages th {
+	padding-left: 125px; 
+	padding-right:125px;
+}
+
+button {
+	font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
+	font-size: 14px;
+}
+</style>
+
+
 <div id="postman">
 <h1>{% block pm_folder_title %}{% endblock %}</h1>
 {% autopaginate pm_messages %}

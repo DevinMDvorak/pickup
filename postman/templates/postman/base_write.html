@@ -24,10 +24,27 @@
 {{ form.media }}{# for ajax_selects (v1.3.6 at least) #}
 {% endblock %}
 {% block content %}
+<style>
+div#postman{
+	display: block;
+    font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
+	color: #06425C;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+}
+.center {
+    margin: auto;
+}
+button {
+	font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
+	font-size: 18px;
+}
+</style>
 <div id="postman">
 <h1>{% block pm_write_title %}{% endblock %}</h1>
 <form action="{% if next_url %}?next={{ next_url|urlencode }}{% endif %}" method="post">{% csrf_token %}
-<table>
+<table class = 'center'>
 {% block pm_write_recipient %}{% endblock %}
 {{ form.as_table }}
 </table>
