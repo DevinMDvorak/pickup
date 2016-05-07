@@ -20,12 +20,10 @@ class UserForm(forms.ModelForm):
         fields = ('first_name', 'last_name', 'email', 'username', 'password')
 
 
-# This form will need to be updated with additional fields
-# once the UserProfile model has been updated
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('picture',)
+        fields = ('picture', 'bio', 'age', 'sex')
 
 
 class NewGameForm(forms.ModelForm):

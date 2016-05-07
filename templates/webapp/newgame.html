@@ -238,7 +238,7 @@
             <div class="select_style">
             {{ form.sport }}
             </div>
-            {{ form.date|attr:"class:formclass"}}
+            {{ form.date|attr:"class:formclass"|attr:"id:datefield"}}
             {{ form.time|attr:"class:formclass"}}
             {{ form.description|attr:"placeholder:Write a short description"|add_class:"formclass"}}
             {{ form.latitude|attr:"type:hidden"}}
@@ -249,4 +249,36 @@
             <!-- Provide a button to click to submit the form. -->
             <input type="submit" name="submit" value="Create" class="submitbutton"/>
         </form>
+
+<script>
+    //Limit date selection to today's date
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+    if(dd<10){
+        dd='0'+dd
+    } 
+    if(mm<10){
+        mm='0'+mm
+    } 
+    today = yyyy+'-'+mm+'-'+dd;
+    document.getElementById("datefield").setAttribute("min", today);
+    //Limit date selection to the following month
+    today = new Date();
+    var mm =today.getMonth()+2;
+    if(mm==13){
+        mm=12
+    }
+    if(mm<10){
+        mm='0'+mm
+    } 
+    if(dd>28){
+        dd=28
+    }
+    nextmonth = yyyy+'-'+mm+'-'+dd;
+    document.getElementById("datefield").setAttribute("max", nextmonth);
+</script>
 {% endblock %}
+
+

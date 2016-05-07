@@ -11,7 +11,7 @@ from django.core import serializers
 
 # Create your views here
 
-# Homepage, this view will pass all local games from database
+# Homepage/joinGames this view will pass all local games from database
 def index(request):
     # Construct a dictionary to pass to the template engine as its context.
     game_list = serializers.serialize('json', Game.objects.all())
@@ -39,7 +39,7 @@ def index(request):
     
     return render(request, 'webapp/index.html', {'game_list': game_list, 'username': username, 'userprofiles': userprofiles})
 
-
+#Allow new users to create an account
 def register(request):
     
     # A boolean value for telling the template whether the registration was successful.
@@ -102,7 +102,7 @@ def register(request):
 
 
 
-
+# This is the default page when a nonlogged in user accesses the site
 def user_login(request):
     
     # If the request is a HTTP POST, try to pull out the relevant information.
@@ -148,6 +148,7 @@ def user_login(request):
 
 # We use the login_required() decorator to ensure only those logged in can access the view.
 # Make sure to use this on every view that requires the user to be logged in
+# This is the page that lets users logout
 @login_required
 def user_logout(request):
     # Since we know the user is logged in, we can now just log them out.
@@ -156,6 +157,7 @@ def user_logout(request):
     # Take the user back to the homepage.
     return HttpResponseRedirect('/webapp/')
 
+#View that creates games from the newgame template
 @login_required
 def creategame(request):
     if request.method == "POST":
@@ -173,6 +175,8 @@ def creategame(request):
         form = NewGameForm()
     return render(request, 'webapp/newgame.html', {'form': form})
 
+
+#View showing the selected users profile
 @login_required
 def profile_view(request, username):
     if username == str(request.user):
@@ -201,6 +205,7 @@ def profile_view(request, username):
     return render(request, 'webapp/profile_view.html', {'image': image, 'editable': editable, 'username': username, 'friends': friends, 'name': name, 'bio': bio, 'age': age, 'sex': sex, 'games': games, 'profile_form': profile_form})
 
 
+        
 @login_required
 def groups(request):
 	if request.method == 'POST':

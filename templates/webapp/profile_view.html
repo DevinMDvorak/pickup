@@ -107,7 +107,7 @@
             </div>
             <div id="age_sex">
                 <p>
-                    {{ sex }} <br> {{ age }}
+                    {{ sex }} <br> <p id="age"></p>
                 </p>
             </div>
         </div>
@@ -118,6 +118,13 @@
         </div>
     </div>
     <script>
+        var age = {{ age }}
+        if (age == 100) {
+            age = "";
+        }
+        document.getElementById('age').innerHTML = age;
+        
+        
         var games = {{ games|safe }};
         var username = "{{ username }}";
         for (i = 0; i < games.length; i++) {
