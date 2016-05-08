@@ -226,6 +226,12 @@ def groups_list(request):
 	return render(request, 'webapp/groupslist.html', {'output': output})
 
 
-@login_required	
+@login_required
 def group(request, name):
-	return render(request, 'webapp/group.html', {'name': name})
+	form = GroupProfileForm()
+	group = GroupProfile.objects.get(group__name = name)
+	name = group.name
+	creator = group.creator
+	sport = group.sport
+	zipcode = group.zipcode
+	return render(request, 'webapp/group.html', {'name': name, 'creator': creator, 'sport': sport, 'zipcode': zipcode})

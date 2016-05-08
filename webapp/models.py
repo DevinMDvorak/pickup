@@ -91,6 +91,7 @@ class GroupProfile(models.Model):
 	creator = models.CharField(max_length=50)
 	sport = models.CharField(max_length=50)
 	zipcode = models.IntegerField()
+	joinees = models.ManyToManyField(User, blank=True)
 
 	def __unicode__(self):
         # This should be self.name

@@ -31,13 +31,13 @@ class NewGameForm(forms.ModelForm):
         model = Game
         fields = ('sport', 'date', 'time', 'description', 'latitude', 'longitude', 'address')
         
-        
-        
+		
 class GroupProfileForm(forms.ModelForm):
 	class Meta:
 		model = GroupProfile
 		fields = ('name', 'creator', 'sport', 'zipcode',)
 
+		
 class JoinGameForm(forms.ModelForm):
     class Meta:
         model = Game
