@@ -2,43 +2,51 @@
 
 {% block title %} Group Manager{% endblock %}
 
+{% block head %}
+	<style>
+	#group_form {
+		width: 50%;
+        padding: 12px 20px;
+        margin: auto;
+        box-sizing: border-box;
+        border: none;
+        outline: none;
+        font-size: 22px;
+        background-color: white;
+	}
+	
+	input {
+		border: 2px solid #ccc;
+		border-radius: 4px;
+	}
+	
+	.submitbutton {
+        margin: 8px 30%;
+        width: 40%;
+        background: #394D61;
+        border: none;
+        padding: 8px 10px 8px 10px;
+        border-radius: 5px;
+        color: #A8BACE;
+        font-size: 22px;
+    }
+    .submitbutton:hover{
+        background: #24384C;
+        color: white;
+    }
+
+    </style>
+{% endblock %}
+
 {% block body_block %}
 	<p>&nbsp;</p>
     <p>&nbsp;</p>
     <h1>Create a Group</h1>
 
-	<form id="group_form" method="post" action="/webapp/groups/" enctype="multipart/form-data" onsubmit="createGroup(); return false;">
+	<form id="group_form" method="post" action="/webapp/groups/" enctype="multipart/form-data">
 		{% csrf_token %}
 		{{ group_form.as_p }}
-		<!--Creator: <input type="text" name="creator" value="" size="50" />
-		<br />
-		Group Name: <input type="text" name="groupname" value="" size="50" />
-		<br />
-		Sport: <input type="text" name="sport" value="" size="50" />
-		<br />
-		Zip Code: <input type="number" name="zipcode" min="00000" max="99999" />
-		<br />
-		<br /> -->
-		<input type="submit" value="Create Group" />
+		<input type="submit" value="Create Group" class="submitbutton" />
 	</form>
-	
-	<!-- 
-	<br /><br /><br /><br /><br /><br /><br /><br />
-	<h1>Joinable Groups</h1>
-
-	
-	<script>
-	function createGroup()
-	{
-		var creator = document.forms["group_form"]["creator"].value;
-		var groupname = document.forms["group_form"]["groupname"].value;
-		var sport = document.forms["group_form"]["sport"].value;
-		var zipcode = document.forms["group_form"]["zipcode"].value;
-		
-		document.getElementById('Groups').innerHTML = "Group created by: " + creator + " Group Name: " + groupname + " Sport: " + sport + " Zip code: " + zipcode;
-	}
-	</script>
-	
-	-->
 	
 {% endblock %}
