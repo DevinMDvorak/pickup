@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect, render_to_response
+from django.shortcuts import render, redirect, render_to_response, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from webapp.forms import UserForm, UserProfileForm, NewGameForm, GroupProfileForm, JoinGameForm
+from webapp.forms import UserForm, UserProfileForm, NewGameForm, GroupProfileForm, JoinGameForm, SmallUserProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
@@ -51,10 +51,11 @@ def register(request):
         # Attempt to grab information from the raw form information.
         # Note that we make use of both UserForm and UserProfileForm.
         user_form = UserForm(data=request.POST)
-        profile_form = UserProfileForm(data=request.POST)
         
+        print "Is this working?"
         # If the two forms are valid...
-        if user_form.is_valid(): #and profile_form.is_valid():
+        if user_form.is_valid():
+
             # Save the user's form data to the database.
             user = user_form.save()
             
@@ -65,9 +66,9 @@ def register(request):
             
             # Now sort out the UserProfile instance.
             # Since we need to set the user attribute ourselves, we set commit=False.
-            # This delays saving the model until we're ready to avoid integrity problems.
-            profile = profile_form.save(commit=False)
-            profile.user = user
+            # This delays saving the model until we're ready to avoid integrity problems.f
+            print "Hello user"
+            profile = UserProfile.objects.create(user = user)
             profile.save()
             
             # Did the user provide a profile picture?
@@ -86,6 +87,7 @@ def register(request):
         # Print problems to the terminal.
         # They'll also be shown to the user.
         else:
+            print "Hey is this printing?"
             print user_form.errors
 
     # Not a HTTP POST, so we render our form using two ModelForm instances.
@@ -97,7 +99,7 @@ def register(request):
     # Render the template depending on the context.
     return render(request,
                   'webapp/register.html',
-                  {'user_form': user_form, 'registered': registered} )
+                  {'user_form': user_form, 'profile_form': profile_form, 'registered': registered} )
 
 
 
@@ -135,13 +137,15 @@ def user_login(request):
         else:
             # Bad login details were provided. So we can't log the user in.
             print "Invalid login details: {0}, {1}".format(username, password)
-            return HttpResponse("Invalid login details supplied.")
+            response = str("Invalid account details")
+            return render(request, 'webapp/login.html', {'response': response})
 
     # The request is not a HTTP POST, so display the login form.
     # This scenario would most likely be a HTTP GET.
     else:
         # No context variables to pass to the template system, hence the
         # blank dictionary object...
+        response = str("")
         return render(request, 'webapp/login.html', {})
 
 
@@ -179,14 +183,27 @@ def creategame(request):
 #View showing the selected users profile
 @login_required
 def profile_view(request, username):
+    if request.method == "POST":
+        instance = get_object_or_404(UserProfile, user__username = username)
+        form = UserProfileForm(request.POST or None, instance=instance)
+        if form.is_valid():
+            form.save()
+            #profile = UserProfile.objects.get(user__username = str(request.user))
+            #profile = form.save(commit = False)
+            #profile.user = User.objects.get(username = str(request.user))
+            #profile.age = new_age
+            #profile.bio = form.bio
+            #profile.sex = form.sex
+            #profile.picture = form.picture
+            #profile.save()
+
     if username == str(request.user):
         editable = 1
     else:
         editable = 0
-    profile_form = UserProfileForm()
+    form = UserProfileForm()
     account = UserProfile.objects.get(user__username = username)
     image = account.picture
-    username = account.user.username
     friends = account.friends
     name = str(account.user.first_name) + " " + str(account.user.last_name)
     bio = account.bio
@@ -194,15 +211,10 @@ def profile_view(request, username):
     sex = account.sex
     
     game_list = Game.objects.filter(joinees__username = username)
-    #game_list = serializers.serialize('json', Game.objects.all())
-    #username = request.user
-    #userprofiles = serializers.serialize('json', User.objects.all())
-    #if request.method == 'POST':
-    #n.joinees.add(User.objects.get(username = str(request.user)))
     games = serializers.serialize('json', game_list)
                     
     
-    return render(request, 'webapp/profile_view.html', {'image': image, 'editable': editable, 'username': username, 'friends': friends, 'name': name, 'bio': bio, 'age': age, 'sex': sex, 'games': games, 'profile_form': profile_form})
+    return render(request, 'webapp/profile_view.html', {'image': image, 'editable': editable, 'username': username, 'friends': friends, 'name': name, 'bio': bio, 'age': age, 'sex': sex, 'games': games, 'form': form})
 
 
         

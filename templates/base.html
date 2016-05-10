@@ -47,7 +47,6 @@
             
             #navigationbar {
                 overflow: hidden;
-                background-image: url('/static/images/orangebackground.jpg');
             }
             
         </style>
@@ -59,7 +58,6 @@
     <!--background='/static/images/GrayBackground.jpg'-->
     <!--<img id="profile_pic" src="/static/images/olivebackground.jpg">-->
     
-        <div id="navigationbar" background='/static/images/orangebackground.jpg'>
         <ul>
         {% if user.is_authenticated %} {% postman_unread as unread_count %}
             <li style="float:right"><a href="/webapp/logout/">Logout</a></li>
@@ -70,6 +68,7 @@
             <li style="float:left"><a href="/webapp/groups/">Create Groups</a></li>
 			<li style="float:left"><a href="/webapp/groupslist/">View Groups</a></li>
         {% else %}
+            <li style="float:left"><a href="/webapp/">PickUp</a></li>
             <li style="float:right"><a href="/webapp/register/">Register Here</a></li>
             <li style="float:right"><a href="/webapp/login/">Login</a></li>
         {% endif %}

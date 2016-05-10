@@ -21,7 +21,7 @@ class UserProfile(models.Model):
     picture = models.ImageField(upload_to='profile_images', default='/profile_images/defaultpic.png')
     friends = models.ManyToManyField("self", blank=True)
     bio = models.TextField(max_length = 512, default="")
-    age = models.IntegerField(default = 100)
+    age = models.IntegerField(default = 18)
     
     MALE = 'Male'
     FEMALE = 'Female'

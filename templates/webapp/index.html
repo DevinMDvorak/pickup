@@ -5,6 +5,11 @@
 
 {% block head %}
     <style>
+        .pic_container img{
+            width:100%;
+            height:auto;
+            max-height:100%;
+        }
         .formclass {
             width: 50%;
             padding: 12px 20px;
@@ -699,6 +704,11 @@
         //$(this).closest('div').find('#additional-info').toggle();
     });
 </script>
+
+{% else %}
+
+<p>&nbsp;</p>
+<p class="pic_container"><img src='/static/images/PickUpIndex.png'></p>
 
 {% endif %}
 {% endblock %}
